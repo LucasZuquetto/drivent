@@ -6,10 +6,11 @@ import enrollmentRepository from "@/repositories/enrollment-repository";
 
 async function getPaymentById(ticketId: number, userId: number) {
   const ticket = await ticketsRepository.findTicketById(ticketId);
+  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
   if (!ticket) {
     throw notFoundError();
   }
-  if (ticket.enrollmentId !== userId) {
+  if (ticket.enrollmentId != enrollment.id) {
     throw unauthorizedError();
   }
   const payment = await paymentsRepository.findByTicketId(ticketId);
