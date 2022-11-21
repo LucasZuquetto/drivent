@@ -28,7 +28,7 @@ export async function postPayment(req: AuthenticatedRequest, res: Response) {
   const { cardData, ticketId } = req.body;
 
   try {
-    const payment = await paymentsService.createPayment(userId, ticketId, cardData);
+    const payment = await paymentsService.createPayment(ticketId, userId, cardData);
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
     if (error.name === "NotFoundError") {
